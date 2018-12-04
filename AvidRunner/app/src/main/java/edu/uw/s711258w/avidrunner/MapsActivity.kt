@@ -2,6 +2,9 @@ package edu.uw.s711258w.avidrunner
 
 import android.Manifest
 import android.content.Intent
+import android.preference.PreferenceManager
+import android.content.SharedPreferences
+import java.text.SimpleDateFormat
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -11,6 +14,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 
 
 import com.google.android.gms.location.*
@@ -23,7 +27,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
-import kotlin.math.round
+import java.util.*
 
 const val REQUEST_PERMISSIONS_CODE = 1
 const val LAST_LOCATION_REQUEST_CODE = 1
@@ -40,7 +44,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var polyline: PolylineOptions? = null
     private var line: Polyline? = null
     private var milesTraveled = 0.0
+    private var count = 0
     private var from: LatLng? = null
+    private var end = false
+    private lateinit var tinydb: TinyDB
     private lateinit var locationCallback: LocationCallback
 
     val RequiredPermissions = listOf<String>(
@@ -55,9 +62,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             getPermissions()
         }
-        milesTraveled = 0.0
+        //mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        tinydb = TinyDB(this)
 
-        startService(Intent(this@MapsActivity, CountingService::class.java))
+        if(savedInstanceState == null) {
+            milesTraveled = 0.0
+            end = false
+            count = 0
+        } else {
+            milesTraveled = savedInstanceState.getDouble("milesRun")
+            count = savedInstanceState.getInt("counter")
+        }
+
+        //startService(Intent(this@MapsActivity, CountingService::class.java))
+        val countThread = Thread(CountRunner())
+        countThread.start()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
@@ -69,11 +88,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         startLocationUpdates()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putDouble("milesRun", milesTraveled)
+        outState.putInt("counter", count)
+        super.onSaveInstanceState(outState)
+    }
+
     //when "Stop" button is pressed
     fun handleStop(v: View) {
         Log.i(TAG, "Stop pressed")
-        stopService(Intent(this@MapsActivity, CountingService::class.java))
+        end = true
+        //fusedLocationClient.removeLocationUpdates(locationCallback)
 
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
+        val date = Date()
+
+        val geoJson = convertToGeoJson(linesList)
+        val newRun = RunHistory(
+            formatRunTime(),
+            formatter.format(date),
+            calcMilePace(),
+            "" + (Math.round(milesTraveled * 100.0) / 100.0).toDouble() + " miles",
+            geoJson
+        )
+
+        var allRuns = tinydb.getListObject("allRuns", RunHistory::class.java)
+        if(allRuns == null) {
+            allRuns = ArrayList<Any>()
+        }
+        allRuns.add(newRun)
+        tinydb.putListObject("allRuns", allRuns)
+        finish()
     }
 
     // Returns whether the permissions have been granted
@@ -141,24 +186,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             line = mMap.addPolyline(polyline)
             if(line!!.points.size > 1) {
                 linesList.add(line!!)
-
+                /*
                 val geoJson = convertToGeoJson(linesList)
                 val intent = Intent(this, MapSavingService::class.java)
                 intent.putExtra("data", geoJson)
                 startService(intent)
+                */
             }
 
             milesTraveled += calculateDistance(latLng)
+            findViewById<TextView>(R.id.miles).text = "" + (Math.round(milesTraveled * 100.0) / 100.0).toDouble() + " miles"
+            val paceFormatted = calcMilePace()
+            findViewById<TextView>(R.id.mile_pace).text = paceFormatted
             Log.v(TAG, "" + milesTraveled)
         }
+    }
+
+    fun calcMilePace() : String {
+        val minutes = count / 60.0
+        val pace = minutes / milesTraveled
+        var t = (pace * 60).toInt()
+        val min = t / 60
+        t %= 60
+        val sec = t
+        var paceFormatted = ""
+        if(min < 1 || min > 150) {
+            paceFormatted = "Calibrating..."
+        } else {
+            paceFormatted = String.format("%d:%02d", min, sec) + "/mile"
+        }
+        return paceFormatted
     }
 
     fun startLocationUpdates() {
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             val locationRequest = LocationRequest().apply {
-                interval = 20000
-                fastestInterval = 15000
+                interval = 7000
+                fastestInterval = 5000
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             }
             locationCallback = object : LocationCallback() {
@@ -220,5 +285,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+    }
+
+    fun formatRunTime() : String {
+        val hours: Int = (count / 3600)
+        val minutes: Int = ((count % 3600) / 60)
+        val seconds: Int =  (count % 60)
+
+        val timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return timeString
+    }
+
+    //Thread runner version
+    inner class CountRunner : Runnable {
+        val runningTime = findViewById<TextView>(R.id.running_time)
+        override fun run() {
+            while(!end) {
+                count++
+                val timeString = formatRunTime()
+                runningTime.text = timeString
+                try {
+                    Thread.sleep(1000) //sleep for 2 seconds
+                } catch (e: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                }
+
+            }
+        }
     }
 }

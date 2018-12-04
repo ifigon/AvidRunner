@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
+ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
 MERGED from [:spotify-app-remote] /Users/Ian/.gradle/caches/transforms-1/files-1.1/spotify-app-remote-release-0.6.0.aar/44f2a8412da37081d5720ebc9166868b/AndroidManifest.xml:22:1-33:12
 MERGED from [com.github.kaaes:spotify-web-api-android:0.4.1] /Users/Ian/.gradle/caches/transforms-1/files-1.1/spotify-web-api-android-0.4.1.aar/39529d8683dbf78ec0ee81a8357ef723/AndroidManifest.xml:2:1-13:12
 MERGED from [com.spotify.sdk:spotify-auth:1.1.0] /Users/Ian/.gradle/caches/transforms-1/files-1.1/spotify-auth-1.1.0.aar/a2e49f75b8d9741de71aea953cd627e2/AndroidManifest.xml:22:1-55:12
@@ -43,20 +43,20 @@ MERGED from [com.android.support:interpolator:28.0.0] /Users/Ian/.gradle/caches/
 MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/Ian/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/fce7d94908770193d6a43f705bf98edb/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/Ian/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/856bb35dfa68d82de050820ea7145e31/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.core:runtime:1.1.1] /Users/Ian/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/629fbdbbecf2451a4663fdd3a4d69c0b/AndroidManifest.xml:17:1-22:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
-INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
+INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
 	package
 		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:3:11-47
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
-		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
+		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
-		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-63:12
+		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:1-62:12
 		INJECTED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/Ian/Informatics/INFO448/AvidRunner/AvidRunner/app/src/main/AndroidManifest.xml:2:11-69

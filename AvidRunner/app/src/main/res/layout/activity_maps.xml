@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:textSize="30dp"
-                tools:text="22:31" />
+                android:text="22:31" />
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -43,12 +43,12 @@
                 android:layout_marginTop="10dp">
 
             <TextView
-                    android:id="@+id/mile_pace"
+                    android:id="@+id/miles"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
                     android:gravity="right"
-                    tools:text="2.76 miles"
+                    android:text="2.76 miles"
                     android:layout_marginLeft="15dp"/>
 
             <Button
@@ -62,12 +62,12 @@
             />
 
             <TextView
-                    android:id="@+id/miles"
+                    android:id="@+id/mile_pace"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
-                    android:gravity=""
-                    tools:text="8:09/mile"
+
+                    android:text="8:09/mile"
                     android:layout_marginRight="15dp"
                     android:layout_alignParentRight="true"/>
 
